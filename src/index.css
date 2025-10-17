@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* color format: rgba(red, green, blue, alpha) */
+@layer base {
+    :root {
+        /* --destructive: 0 84% 60%; */
+        --primary: 80, 87, 234;
+        --primary-grey: 0, 0, 0;
+        --custom-grey: 242, 242, 242, 1;
+
+        --radius-tiny: 7px;
+        --radius-xSmall: 10px;
+        --radius-small: 11px;
+        --radius-medium: 18px;
+        --radius-large: 21px;
+        --radius-xLarge: 30px;
+
+        --shadow-small: 0px 1px 7px 0px rgba(0, 0, 0, 0.09);
+
+        /* Added for 1rem and 1em = 16px */
+        --rem: 16px;
+        --em: 16px;
+    }
+
+}
+
+.ProseMirror {
+    @apply min-h-24 w-full focus:outline-none;
+}
+
+.ProseMirror p {
+    @apply mb-2;
+}
+
+.ProseMirror h1 {
+    @apply text-xl font-semibold mb-3;
+}
+
+.ProseMirror ul {
+    @apply list-disc pl-6 mb-2;
+}
+
+.ProseMirror ol {
+    @apply list-decimal pl-6 mb-2;
+}
+
+.ProseMirror blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic my-2;
+}
+
+.ProseMirror pre {
+    @apply bg-gray-100 p-4 rounded-md my-2 font-mono;
+}
+
+.ProseMirror code {
+    @apply bg-gray-100 px-1 rounded font-mono;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+     @apply text-tertiaryGrey text-sm;
+     content: attr(data-placeholder);
+     float: left;
+     height: 0;
+     pointer-events: none;
+}
+
+@layer base {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+}
