@@ -1,6 +1,4 @@
-# Atlys Social Media Post Editor
 
-A modern social media post editor built with React, TypeScript, and TipTap. Create and share posts with rich text formatting.
 
 ## 🚀 Quick Start
 
@@ -14,7 +12,7 @@ Make sure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/atlys-assignment.git
+   git clone https://github.com/JRanjan-Biswal/jyoti-ranjan-biswal-atlys-assignment.git
    ```
 
 2. Navigate to project directory:
@@ -65,4 +63,4 @@ src/
 
 ---
 
-Made with ❤️ for Atlys
+Jyoti Ranjan Biswal
