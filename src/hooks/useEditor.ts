@@ -27,8 +27,11 @@ export const useEditor = (onPostCreated?: () => void) => {
       Placeholder.configure({
         placeholder: 'How are you feeling today?',
         emptyEditorClass: 'is-editor-empty',
+        emptyNodeClass: 'is-empty',
+        showOnlyWhenEditable: false,
       }),
     ],
+    editable: false,
     editorProps: {
       attributes: {
         class: 'min-h-24 w-full focus:outline-none',

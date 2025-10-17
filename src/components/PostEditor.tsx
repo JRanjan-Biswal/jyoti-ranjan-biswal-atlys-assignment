@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EditorContent } from '@tiptap/react';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
@@ -50,9 +50,20 @@ export const PostEditor: React.FC<PostEditorProps> = ({ onPostCreated }) => {
 
   const { toast } = useToast();
 
+  // Update editor editable state when auth state changes
+  useEffect(() => {
+    if (editor) {
+      editor.setEditable(!!user);
+      if (!user) {
+        editor.setOptions({ editable: false });
+        // editor.commands.blur();
+      }
+    }
+  }, [editor, user]);
+
   const handleToolbarClick = (format: string) => {
     if (!user) {
-      toast('Please sign in to use this feature', 'error');
+      toast('Please sign in to create a post', 'error');
       return;
     }
     toggleFormat(format);
@@ -60,7 +71,7 @@ export const PostEditor: React.FC<PostEditorProps> = ({ onPostCreated }) => {
 
   const handleTextStyleChange = (value: string) => {
     if (!user) {
-      toast('Please sign in to use this feature', 'error');
+      toast('Please sign in to create a post', 'error');
       return;
     }
     setTextStyle(value as 'paragraph' | 'heading');
@@ -72,13 +83,18 @@ export const PostEditor: React.FC<PostEditorProps> = ({ onPostCreated }) => {
   };
 
   const handleSubmitClick = async () => {
+    if (!user) {
+      toast('Please sign in to create a post', 'error');
+      return;
+    }
+
     if (!editor?.getText().trim()) {
       toast('Please enter some content before posting', 'error');
       return;
     }
 
     try {
-      await handleSubmit(user?.id, user?.username, selectedEmoji || '😊');
+      await handleSubmit(user.id, user.username, selectedEmoji || '😊');
       toast('Post published!', 'success');
       setSelectedEmoji(null); // Reset emoji after posting
     } catch (error) {
@@ -180,7 +196,13 @@ export const PostEditor: React.FC<PostEditorProps> = ({ onPostCreated }) => {
               <Button
                 variant="empty"
                 className="rounded-xSmall"
-                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                onClick={() => {
+                  if (!user) {
+                    toast('Please sign in to create a post', 'error');
+                    return;
+                  }
+                  setShowEmojiPicker(!showEmojiPicker);
+                }}
               >
                 {selectedEmoji ? (
                   <span className="text-lg leading-none">{selectedEmoji}</span>
@@ -198,13 +220,16 @@ export const PostEditor: React.FC<PostEditorProps> = ({ onPostCreated }) => {
                 />
               )}
             </div>
-            <EditorContent
-              editor={editor}
-              className={cn(
-                "min-h-24 w-[calc(100%-40px)] focus:outline-none",
-                textStyle === 'heading' && "text-xl font-semibold"
-              )}
-            />
+            <div className="relative flex-1">
+              <EditorContent
+                editor={editor}
+                className={cn(
+                  "min-h-24 w-[calc(100%-40px)] focus:outline-none",
+                  textStyle === 'heading' && "text-xl font-semibold",
+                  !user && "cursor-not-allowed"
+                )}
+              />
+            </div>
           </div>
         </div>
 

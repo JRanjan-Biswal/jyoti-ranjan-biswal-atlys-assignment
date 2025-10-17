@@ -60,10 +60,21 @@
 
 .ProseMirror p.is-editor-empty:first-child::before {
      @apply text-tertiaryGrey text-sm;
-     content: attr(data-placeholder);
+     content: 'How are you feeling today?';
      float: left;
      height: 0;
      pointer-events: none;
+     opacity: 0.7;
+}
+
+/* Additional selector for empty paragraphs */
+.ProseMirror p.is-empty::before {
+     @apply text-tertiaryGrey text-sm;
+     content: 'How are you feeling today?';
+     float: left;
+     height: 0;
+     pointer-events: none;
+     opacity: 0.7;
 }
 
 @layer base {
